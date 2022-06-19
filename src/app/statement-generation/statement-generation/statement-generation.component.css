@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  border: 2px solid black;
+  padding: 40px;
+  justify-content: space-around;
+}
+
+.left-container {
+  
+  border: 2px solid black;
+}
+
+.right-container {
+  border: 2px solid black;
+}
