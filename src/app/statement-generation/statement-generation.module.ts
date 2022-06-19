@@ -5,7 +5,8 @@ import { UserDetailsCardComponent } from './user-details-card/user-details-card.
 import { StatementFormComponent } from './statement-form/statement-form.component';
 import { LatestTransactionsComponent } from './latest-transactions/latest-transactions.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FirstErrorKeyPipe } from './first-error-key.pipe';
 
 
 @NgModule({
@@ -13,11 +14,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     StatementGenerationComponent,
     UserDetailsCardComponent,
     StatementFormComponent,
-    LatestTransactionsComponent
+    LatestTransactionsComponent,
+    FirstErrorKeyPipe
   ],
   imports: [
     CommonModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     StatementGenerationComponent
