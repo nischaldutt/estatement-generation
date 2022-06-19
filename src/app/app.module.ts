@@ -7,12 +7,12 @@ import { StatementGenerationModule } from './statement-generation/statement-gene
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StatementGenerationModule
+    StatementGenerationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
