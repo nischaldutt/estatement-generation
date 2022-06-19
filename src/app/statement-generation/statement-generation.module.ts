@@ -4,6 +4,7 @@ import { StatementGenerationComponent } from './statement-generation/statement-g
 import { UserDetailsCardComponent } from './user-details-card/user-details-card.component';
 import { StatementFormComponent } from './statement-form/statement-form.component';
 import { LatestTransactionsComponent } from './latest-transactions/latest-transactions.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -15,7 +16,11 @@ import { LatestTransactionsComponent } from './latest-transactions/latest-transa
     LatestTransactionsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NgbModule
+  ],
+  exports: [
+    StatementGenerationComponent
   ]
 })
 export class StatementGenerationModule { }
