@@ -1,0 +1,55 @@
+<form class="user-form" [formGroup]="statementForm" (ngSubmit)="onSubmit()" novalidate>
+  <h5>Enter details to fetch you account's e-statement</h5>
+
+  <div class="row row-cols-sm-auto">
+    <div class="col-12">
+      <label>From</label>
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="fromDate" ngbDatepicker
+          #fromDatePicker="ngbDatepicker">
+        <button class="btn btn-outline-secondary calendar" (click)="fromDatePicker.toggle()" type="button">
+          <i class="fa fa-calendar"></i>
+        </button>
+      </div>
+
+      <div *ngIf="!fromDate?.valid && (fromDate?.dirty ||fromDate?.touched)">
+        <div class="validation-error" *ngIf="(fromDate?.errors | firstErrorKey) === 'required'">
+          From Date is Required
+        </div>
+
+<!-- [hidden]="!fromDate?.errors?.['required']" -->
+<!-- [hidden]="!fromDate?.errors?.['invalidDate']" -->
+
+        <div class="validation-error" *ngIf="(fromDate?.errors | firstErrorKey) === 'invalidDate'">
+          From Date is Invalid
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label>To</label>
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="toDate" ngbDatepicker
+          #toDatePicker="ngbDatepicker">
+        <button class="btn btn-outline-secondary calendar" (click)="toDatePicker.toggle()" type="button">
+          <i class="fa fa-calendar"></i>
+        </button>
+      </div>
+
+      <div *ngIf="!toDate?.valid && (toDate?.dirty ||toDate?.touched)">
+        <div class="validation-error"  *ngIf="(fromDate?.errors | firstErrorKey) === 'required'">
+          To Date is Required
+        </div>
+
+        <div class="validation-error" *ngIf="(fromDate?.errors | firstErrorKey) === 'invalidDate'">
+          To Date is Invalid
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="form-submit btn btn-primary" [disabled]="!statementForm.valid">Submit</button>
+</form>
+
+<hr />
+<!-- <pre>Model: {{ model | json }}</pre> -->
