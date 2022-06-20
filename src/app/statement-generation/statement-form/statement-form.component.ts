@@ -10,9 +10,14 @@ import {ValidateDate} from "../../shared/date.validator";
 })
 export class StatementFormComponent {
   statementForm = new FormGroup({
+    formType: new FormControl("month", [Validators.required]),
     fromDate: new FormControl("", [Validators.required, ValidateDate]),
     toDate: new FormControl("", [Validators.required, ValidateDate]),
   })
+
+  get formType() {
+    return this.statementForm.get('formType');
+  }
   
   get fromDate() {
     return this.statementForm.get('fromDate');
