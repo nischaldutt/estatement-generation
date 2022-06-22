@@ -1,7 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { LoginComponent } from "./login/login/login.component";
+import { StatementGenerationComponent } from "./statement-generation/statement-generation/statement-generation.component";
+import { ViewStatementComponent } from "./view-statement/view-statement/view-statement.component";
+
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'generate-statement', component: StatementGenerationComponent },
+  { path: 'view-statement', component: ViewStatementComponent },
+  { path: '', component: LoginComponent },
+  { path: '**', component: LoginComponent}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
