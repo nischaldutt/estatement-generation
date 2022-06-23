@@ -1,24 +1,50 @@
-import {Component} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
-import {ValidateDate} from "../../shared/date.validator";
+import { ValidateDate } from '../../shared/date.validator';
 
 @Component({
   selector: 'app-statement-form',
   templateUrl: './statement-form.component.html',
   styleUrls: ['./statement-form.component.css'],
 })
-export class StatementFormComponent {
-  statementForm = new FormGroup({
-    formType: new FormControl("month", [Validators.required]),
-    fromDate: new FormControl("", [Validators.required, ValidateDate]),
-    toDate: new FormControl("", [Validators.required, ValidateDate]),
-  })
+export class StatementFormComponent implements OnInit {
+  statementForm!: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit() {
+    this.statementForm = this.formBuilder.group({
+      formType: new FormControl('month', [Validators.required]),
+      fromDate: new FormControl('', [Validators.required]),
+      toDate: new FormControl(''),
+    });
+
+    this.statementForm.get('formType')?.valueChanges.subscribe((response) => {
+      if (response == 'month') {
+        this.statementForm.get('toDate')?.clearValidators();
+        this.statementForm.get('toDate')?.updateValueAndValidity();
+      } else {
+        this.statementForm.get('toDate')?.setValidators(Validators.required);
+        this.statementForm.get('toDate')?.updateValueAndValidity();
+      }
+    });
+  }
+
+  // saveForm() {
+  //   if (this.profileForm.valid) {
+  //     console.log('Profile form data :: ', this.profileForm.value);
+  //   }
 
   get formType() {
     return this.statementForm.get('formType');
   }
-  
+
   get fromDate() {
     return this.statementForm.get('fromDate');
   }
@@ -28,6 +54,7 @@ export class StatementFormComponent {
   }
 
   onSubmit() {
-    console.log(this.statementForm.value)
+    // this.statementForm.valid &&
+    console.log(this.statementForm.value);
   }
 }
