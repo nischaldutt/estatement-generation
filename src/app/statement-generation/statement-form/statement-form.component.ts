@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 
 import { ValidateDate } from '../../shared/date.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-statement-form',
@@ -16,7 +17,7 @@ import { ValidateDate } from '../../shared/date.validator';
 export class StatementFormComponent implements OnInit {
   statementForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,private router: Router) {}
 
   ngOnInit() {
     this.statementForm = this.formBuilder.group({
@@ -56,5 +57,10 @@ export class StatementFormComponent implements OnInit {
   onSubmit() {
     // this.statementForm.valid &&
     console.log(this.statementForm.value);
+    this.redirectToStatementPage();
+  }
+
+  redirectToStatementPage() {
+    this.router.navigateByUrl('/stat-page');
   }
 }

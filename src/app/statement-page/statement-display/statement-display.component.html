@@ -1,0 +1,34 @@
+<br>
+<br>
+
+ <table class="table table-bordered" >
+    <thead>
+    <th>S No</th>
+    <th>Transaction Date</th>
+    <th>Value Date</th>
+    <th>Transaction Remarks</th>
+    <th>Withdrawal Amount (INR)</th>
+    <th>Deposit Amount (INR)</th>
+    <th>Balance (INR)</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let x of trans; index as i">
+            <td >{{x.id }}</td>
+            <td>{{x.trans_date}}</td>
+            <td>{{x.val_date}}</td>
+            <td>{{x.trans_remarks}}</td>
+            <td>{{x.debit_amount}}</td>
+            <td>{{x.credit_amount}}</td>
+            <td>{{x.balance}}</td>
+        </tr>
+    </tbody>
+ </table>
+ <div class="d-flex justify-content-between p-2">
+    <span>
+        <button name="downloadPDF" >Download PDF </button>
+        <button name="sendEmail" >   Send Email</button>
+    </span>
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshTransactions()">
+    </ngb-pagination>
+    
+</div>
