@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 import { ValidateDate } from '../../shared/date.validator';
 
@@ -15,13 +16,17 @@ import { ValidateDate } from '../../shared/date.validator';
 })
 export class StatementFormComponent implements OnInit {
   statementForm!: FormGroup;
+  today!: NgbDateStruct;
 
   constructor(
     private formBuilder: FormBuilder,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private calendar: NgbCalendar
   ) {}
 
   ngOnInit() {
+    this.today = this.calendar.getToday();
+
     this.statementForm = this.formBuilder.group({
       formType: new FormControl('month', [Validators.required]),
       fromDate: new FormControl(''),
@@ -33,8 +38,6 @@ export class StatementFormComponent implements OnInit {
     this.statementForm
       .get('formType')
       ?.valueChanges.subscribe((currentFormType) => {
-        console.log({ isFormValid: this.statementForm.valid });
-        console.log({ currentFormType });
         switch (currentFormType) {
           case 'month': {
             this.resetControlValueAndValidations();
@@ -77,12 +80,12 @@ export class StatementFormComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
+    // run change detection explicitly after the change
     this.cdRef.detectChanges();
   }
 
   resetControlValueAndValidations() {
     for (let controlKey in this.statementForm.value) {
-      console.log({ controlKey });
       if (controlKey !== 'formType') {
         this.statementForm.get(controlKey)?.reset();
         this.statementForm.get(controlKey)?.clearValidators();
@@ -120,6 +123,26 @@ export class StatementFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.statementForm.valid && console.log({ test: this.statementForm.value });
+    if (this.statementForm.valid) {
+      switch (this.statementForm.value.formType) {
+        case 'month': {
+          const { selectedMonth, selectedYear } = this.statementForm.value;
+          console.log({ selectedMonth, selectedYear });
+          return;
+        }
+        case 'year': {
+          const { selectedYear } = this.statementForm.value;
+          console.log({ selectedYear });
+          return;
+        }
+        case 'custom': {
+          const { fromDate, toDate } = this.statementForm.value;
+          console.log({ fromDate, toDate });
+          return;
+        }
+        default:
+          return;
+      }
+    }
   }
 }

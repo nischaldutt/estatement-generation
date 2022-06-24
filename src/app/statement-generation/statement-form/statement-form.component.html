@@ -84,8 +84,11 @@
       <div class="col-12">
         <label>From</label>
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="fromDate" ngbDatepicker
-            #fromDatePicker="ngbDatepicker">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" 
+            formControlName="fromDate" ngbDatepicker
+            #fromDatePicker="ngbDatepicker" 
+            [minDate]="{year: 2020, month: 1, day: 1}"
+            [maxDate]="today">
           <button class="btn btn-outline-secondary calendar" (click)="fromDatePicker.toggle()" type="button">
             <i class="fa fa-calendar"></i>
           </button>
@@ -109,8 +112,11 @@
       <div class="col-12">
         <label>To</label>
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="toDate" ngbDatepicker
-            #toDatePicker="ngbDatepicker">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" 
+            formControlName="toDate" ngbDatepicker
+            #toDatePicker="ngbDatepicker"
+            [minDate]="fromDate?.value"
+            [maxDate]="today">
           <button class="btn btn-outline-secondary calendar" (click)="toDatePicker.toggle()" type="button">
             <i class="fa fa-calendar"></i>
           </button>
