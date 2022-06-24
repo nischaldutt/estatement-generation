@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
-import { ValidateDate } from '../../shared/date.validator';
+import { ValidateDate } from '../../../shared/validators/date.validator';
 
 @Component({
   selector: 'app-statement-form',

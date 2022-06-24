@@ -7,7 +7,8 @@ import { LatestTransactionsComponent } from './latest-transactions/latest-transa
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FirstErrorKeyPipe } from './first-error-key.pipe';
-
+import { AppModule } from 'src/app/app.module';
+import { SharedModuleModule } from 'src/app/shared/shared-module/shared-module.module';
 
 @NgModule({
   declarations: [
@@ -15,16 +16,15 @@ import { FirstErrorKeyPipe } from './first-error-key.pipe';
     UserDetailsCardComponent,
     StatementFormComponent,
     LatestTransactionsComponent,
-    FirstErrorKeyPipe
+    FirstErrorKeyPipe,
   ],
   imports: [
     CommonModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModuleModule,
   ],
-  exports: [
-    StatementGenerationComponent
-  ]
+  exports: [StatementGenerationComponent],
 })
-export class StatementGenerationModule { }
+export class StatementGenerationModule {}
