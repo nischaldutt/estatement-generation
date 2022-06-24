@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 import { ValidateDate } from '../../shared/date.validator';
 import { Router } from '@angular/router';
@@ -16,31 +17,84 @@ import { Router } from '@angular/router';
 })
 export class StatementFormComponent implements OnInit {
   statementForm!: FormGroup;
+  today!: NgbDateStruct;
 
-  constructor(private formBuilder: FormBuilder,private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private cdRef: ChangeDetectorRef,
+    private calendar: NgbCalendar,
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.today = this.calendar.getToday();
+
     this.statementForm = this.formBuilder.group({
       formType: new FormControl('month', [Validators.required]),
-      fromDate: new FormControl('', [Validators.required]),
+      fromDate: new FormControl(''),
       toDate: new FormControl(''),
+      selectedMonth: new FormControl('', [Validators.required]),
+      selectedYear: new FormControl('', [Validators.required]),
     });
 
-    this.statementForm.get('formType')?.valueChanges.subscribe((response) => {
-      if (response == 'month') {
-        this.statementForm.get('toDate')?.clearValidators();
-        this.statementForm.get('toDate')?.updateValueAndValidity();
-      } else {
-        this.statementForm.get('toDate')?.setValidators(Validators.required);
-        this.statementForm.get('toDate')?.updateValueAndValidity();
-      }
-    });
+    this.statementForm
+      .get('formType')
+      ?.valueChanges.subscribe((currentFormType) => {
+        switch (currentFormType) {
+          case 'month': {
+            this.resetControlValueAndValidations();
+            this.statementForm
+              .get('selectedYear')
+              ?.setValidators([Validators.required]);
+            this.statementForm.get('selectedMonth')?.updateValueAndValidity();
+            this.statementForm
+              .get('selectedMonth')
+              ?.setValidators([Validators.required]);
+            this.statementForm.get('selectedMonth')?.updateValueAndValidity();
+            return;
+          }
+          case 'year': {
+            this.resetControlValueAndValidations();
+            this.statementForm
+              .get('selectedYear')
+              ?.setValidators([Validators.required]);
+            this.statementForm.get('selectedMonth')?.updateValueAndValidity();
+            return;
+          }
+          case 'custom': {
+            this.resetControlValueAndValidations();
+            this.statementForm
+              .get('fromDate')
+              ?.setValidators([Validators.required, ValidateDate]);
+            this.statementForm.get('toDate')?.updateValueAndValidity();
+            this.statementForm
+              .get('toDate')
+              ?.setValidators([Validators.required, ValidateDate]);
+            this.statementForm.get('toDate')?.updateValueAndValidity();
+            return;
+          }
+          default: {
+            this.resetControlValueAndValidations();
+            return;
+          }
+        }
+      });
   }
 
-  // saveForm() {
-  //   if (this.profileForm.valid) {
-  //     console.log('Profile form data :: ', this.profileForm.value);
-  //   }
+  ngAfterViewChecked() {
+    // run change detection explicitly after the change
+    this.cdRef.detectChanges();
+  }
+
+  resetControlValueAndValidations() {
+    for (let controlKey in this.statementForm.value) {
+      if (controlKey !== 'formType') {
+        this.statementForm.get(controlKey)?.reset();
+        this.statementForm.get(controlKey)?.clearValidators();
+        this.statementForm.get(controlKey)?.updateValueAndValidity();
+      }
+    }
+  }
 
   get formType() {
     return this.statementForm.get('formType');
@@ -54,13 +108,48 @@ export class StatementFormComponent implements OnInit {
     return this.statementForm.get('toDate');
   }
 
-  onSubmit() {
-    // this.statementForm.valid &&
-    console.log(this.statementForm.value);
-    this.redirectToStatementPage();
+  get selectedMonth() {
+    return this.statementForm.get('selectedMonth');
   }
 
-  redirectToStatementPage() {
-    this.router.navigateByUrl('/stat-page');
+  get selectedYear() {
+    return this.statementForm.get('selectedYear');
   }
+
+  changeMonth(e: any) {
+    this.selectedMonth?.setValue(e.target.value);
+  }
+
+  changeYear(e: any) {
+    this.selectedYear?.setValue(e.target.value);
+  }
+
+  onSubmit() {
+    if (this.statementForm.valid) {
+      switch (this.statementForm.value.formType) {
+        case 'month': {
+          const { selectedMonth, selectedYear } = this.statementForm.value;
+          console.log({ selectedMonth, selectedYear });
+          return;
+        }
+        case 'year': {
+          const { selectedYear } = this.statementForm.value;
+          console.log({ selectedYear });
+          return;
+        }
+        case 'custom': {
+          const { fromDate, toDate } = this.statementForm.value;
+          console.log({ fromDate, toDate });
+          return;
+        }
+        default:
+          return;
+      }
+    }
+    
+    this.redirectToStatementPage();
+  }
+    redirectToStatementPage() {
+      this.router.navigateByUrl('/stat-page');
+    }
 }
