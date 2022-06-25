@@ -1,50 +1,66 @@
 <form>
-    <div class="mb-3 row">
-      <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
-      <div class="col-xs-3 col-sm-auto">
-        <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="service.searchTerm">
-      </div>
-      <span class="col col-form-label" *ngIf="service.loading$ | async">Loading...</span>
+  <div class="mb-3 row">
+    <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
+    <div class="col-xs-3 col-sm-auto">
+      <input id="table-complete-search" type="text" class="form-control" name="searchTerm"
+        [(ngModel)]="service.searchTerm">
     </div>
-  
-    <table class="table table-striped">
-      <thead>
+    <span class="col col-form-label" *ngIf="service.loading$ | async">Loading...</span>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
       <tr>
         <th scope="accountNo">Account No.</th>
         <th scope="col" sortable="name" (sort)="onSort($event)">Account Holder Name</th>
         <th scope="col" sortable="time" (sort)="onSort($event)">Time</th>
-        <th scope="col" sortable="txnType" (sort)="onSort($event)">Transaction Type</th>
+        <th scope="col">Transaction Type</th>
         <th scope="col">Reference Account No.</th>
-        <th scope="col">Amount</th>
+        <th scope="col">Transaction Amount</th>
         <th scope="col">Balance</th>
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       <tr *ngFor="let txn of transactions$ | async">
-        <td scope="row">{{ txn.accountNo }}</td>
+        <!-- <td scope="row">{{ txn.accountNo }}</td> -->
+        <td>
+          <ngb-highlight [result]="txn.accountNo" [term]="service.searchTerm"></ngb-highlight>
+        </td>
         <td>
           <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + txn.flag" class="me-2" style="width: 20px"> -->
           <ngb-highlight [result]="txn.name" [term]="service.searchTerm"></ngb-highlight>
         </td>
-        <td><ngb-highlight [result]="txn.time.toISOString().split('T')[0]"></ngb-highlight></td>
-        <td><ngb-highlight [result]="txn.txnType"></ngb-highlight></td>
-        <td><ngb-highlight [result]="txn.refAccount"></ngb-highlight></td>
-        <td><ngb-highlight [result]="txn.txnAmount.toString()">{{ txn.txnAmount }}</ngb-highlight></td>
-        <td><ngb-highlight [result]="txn.accountBalance.toString()"></ngb-highlight></td>
+        <td>
+          <ngb-highlight [result]="txn.time.toISOString().split('T')[0]"></ngb-highlight>
+        </td>
+        <td scope="row">{{ txn.txnType === "C" ? "Credit": "Debit" }}</td>
+        <!-- <td>
+          <ngb-highlight [result]="txn.txnType"></ngb-highlight>
+        </td> -->
+        <td>
+          <ngb-highlight [result]="txn.refAccount" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+        <td scope="row">{{ txn.txnAmount.toString() }}</td>
+        <!-- <td>
+          <ngb-highlight [result]="txn.txnAmount.toString()">{{ txn.txnAmount }}</ngb-highlight>
+        </td> -->
+        <td scope="row">{{ txn.accountBalance.toString() }}</td>
+        <!-- <td>
+          <ngb-highlight [result]="txn.accountBalance.toString()"></ngb-highlight>
+        </td> -->
       </tr>
-      </tbody>
-    </table>
-  
-    <div class="d-flex justify-content-between p-2">
-      <ngb-pagination
-        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
-      </ngb-pagination>
-  
-      <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
-        <option [ngValue]="2">2 items per page</option>
-        <option [ngValue]="4">4 items per page</option>
-        <option [ngValue]="6">6 items per page</option>
-      </select>
-    </div>
-  
-  </form>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+    </ngb-pagination>
+
+    <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+      <option [ngValue]="2">2 items per page</option>
+      <option [ngValue]="4">4 items per page</option>
+      <option [ngValue]="6">6 items per page</option>
+    </select>
+  </div>
+
+</form>
