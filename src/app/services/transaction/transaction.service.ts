@@ -25,7 +25,7 @@ interface State {
   sortDirection: SortDirection;
 }
 
-const compare = (v1: string | number, v2: string | number) =>
+const compare = (v1: string | number | Date, v2: string | number | Date) =>
   v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 function sort(
@@ -38,8 +38,8 @@ function sort(
   } else {
     return [...transactions].sort((a, b) => {
       console.log({ a, b });
-      // const res = compare(a[column], b[column]);
-      // return direction === 'asc' ? res : -res;
+      const res = compare(a[column], b[column]);
+      return direction === 'asc' ? res : -res;
       return 1;
     });
   }
@@ -47,11 +47,13 @@ function sort(
 
 function matches(transaction: Transaction, term: string, pipe: PipeTransform) {
   console.log({ transaction });
-  // return (
-  //   transaction.name.toLowerCase().includes(term.toLowerCase()) ||
-  //   pipe.transform(transaction.area).includes(term) ||
-  //   pipe.transform(transaction.population).includes(term)
-  // );
+  return (
+    transaction.name.toLowerCase().includes(term.toLowerCase()) ||
+    pipe.transform(transaction.accountNo).includes(term) ||
+    pipe.transform(transaction.name).includes(term) ||
+    pipe.transform(transaction.txnType).includes(term) ||
+    pipe.transform(transaction.refAccount).includes(term)
+  );
 }
 
 @Injectable({ providedIn: 'root' })
