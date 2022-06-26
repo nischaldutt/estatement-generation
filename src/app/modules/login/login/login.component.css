@@ -1,10 +1,10 @@
+.container {
+  display: flex;
+  border: 1px solid black;
+}
 
 .center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
+  width: 20vw;
   background: white;
   border-radius: 10px;
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
@@ -113,4 +113,12 @@ input[type="submit"]:hover {
 
 .signup_link a:hover {
   text-decoration: underline;
+}
+
+.validation-error {
+  color: red;
+  font-size: 12px;
+  font-style: italic;
+  position: relative;
+  top: -15px;
 }

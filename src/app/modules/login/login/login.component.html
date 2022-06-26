@@ -1,24 +1,46 @@
 
-<div class="center">
-  <h1>Login</h1>
-  <form method="post">
-    <div class="txt_field">
-      <input type="text" required>
-      <span></span>
-      <label>Username</label>
+<div class="container">
+  <div class="carousal-container">
+    <app-custom-carousal></app-custom-carousal>
+  </div>
+
+  <div class="form-container">
+    <div class="center">
+      <h1>Login</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" novalidate>
+        <div class="txt_field">
+          <input type="email" formControlName="email">
+          <span></span>
+          <label>Email</label>          
+        </div>
+        <div *ngIf="!email?.valid && (email?.dirty || email?.touched)">
+          <div class="validation-error" *ngIf="(email?.errors | firstErrorKey) === 'required'">
+            Required
+          </div>
+        
+          <div class="validation-error" *ngIf="(email?.errors | firstErrorKey) === 'email'">
+            Email Invalid
+          </div>
+        </div>
+        <div class="txt_field">
+          <input type="password" formControlName="password">
+          <span></span>
+          <label>Password</label>
+        </div>
+        <div class="validation-error" *ngIf="!password?.valid && (password?.dirty || password?.touched)">
+          Required
+        </div>
+        <div class="pass">Forgot Password?</div>
+        <input type="submit" value="Login">
+        <!-- <button type="submit" class="form-submit btn btn-primary">Login</button> -->
+        <div class="signup_link">
+          Not a member? <a href="#">Signup</a>
+        </div>
+      </form>
     </div>
-    <div class="txt_field">
-      <input type="password" required>
-      <span></span>
-      <label>Password</label>
-    </div>
-    <div class="pass">Forgot Password?</div>
-    <input type="submit" value="Login">
-    <div class="signup_link">
-      Not a member? <a href="#">Signup</a>
-    </div>
-  </form>
+  </div>
 </div>
+
 <!-- 
 <a routerLink="generate-statement">login</a>
 <router-outlet></router-outlet> -->
