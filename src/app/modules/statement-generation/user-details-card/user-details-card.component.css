@@ -10,3 +10,21 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.card-content {
+  margin-top: 20px;
+}
+
+table, td, tr {
+  font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.198);
+}
+
+.row-type {
+  font-weight: bolder;
+}
+
+td {
+  text-align: left;
+  padding: 0px 3px;
+}

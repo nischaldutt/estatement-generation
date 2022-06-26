@@ -1,14 +1,13 @@
 .container {
   display: flex;
-  border: 1px solid black;
 }
 
 .center {
   width: 20vw;
   background: white;
   border-radius: 10px;
-  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid black;
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.3);
+
 }
 
 .center h1 {
@@ -104,6 +103,7 @@ input[type="submit"]:hover {
   text-align: center;
   font-size: 16px;
   color: #666666;
+  padding-bottom: 20px;
 }
 
 .signup_link a {
@@ -121,4 +121,59 @@ input[type="submit"]:hover {
   font-style: italic;
   position: relative;
   top: -15px;
+}
+
+.login-container {
+  display: flex;
+  border: 1px solid black;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
+}
+
+#hero {
+  width: 70%;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.hero-svg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-svg img {
+  width: 600px;
+  height: 400px;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+
+  50% {
+    transform: translatey(-20px);
+  }
+
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+.login-vContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.moto-container {
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
