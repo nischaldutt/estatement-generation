@@ -6,8 +6,7 @@ import { StatementFormComponent } from './statement-form/statement-form.componen
 import { LatestTransactionsComponent } from './latest-transactions/latest-transactions.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FirstErrorKeyPipe } from './first-error-key.pipe';
-import { AppModule } from 'src/app/app.module';
+import { FirstErrorKeyPipe } from 'src/app/shared/pipes/first-error-key.pipe';
 import { SharedModuleModule } from 'src/app/shared/shared-module/shared-module.module';
 
 @NgModule({
@@ -16,7 +15,6 @@ import { SharedModuleModule } from 'src/app/shared/shared-module/shared-module.m
     UserDetailsCardComponent,
     StatementFormComponent,
     LatestTransactionsComponent,
-    FirstErrorKeyPipe,
   ],
   imports: [
     CommonModule,
