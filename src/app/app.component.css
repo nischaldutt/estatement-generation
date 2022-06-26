@@ -5,17 +5,14 @@
 }
 
 .nav-container {
-  border: 1px solid black;
-
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .nav-container-center{
-  border: 1px solid black;
   width: 70vw;
 }
 
 .nav-list {
-  border: 1px solid black;
   display: flex;
   justify-content: flex-end;
 }

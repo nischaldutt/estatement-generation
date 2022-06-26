@@ -125,7 +125,6 @@ input[type="submit"]:hover {
 
 .login-container {
   display: flex;
-  border: 1px solid black;
   height: 90vh;
   justify-content: center;
   align-items: center;
