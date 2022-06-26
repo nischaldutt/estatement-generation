@@ -1,6 +1,5 @@
 .statement-container {
   display: flex;
-  border: 1px solid black;
   padding: 40px 0;
   justify-content: space-around;
   width: 70vw;
@@ -10,10 +9,48 @@
 
 .left-container {
   width: 30%;
-  border: 2px solid black;
 }
 
 .right-container {
   width: 70%;
-  border: 2px solid black;
+}
+
+@media (max-width: 1900px) {
+  .left-container {
+      width: 40%;
+    }
+  
+    .right-container {
+      width: 60%;
+    }
+}
+
+@media (max-width: 1400px) {
+
+
+    .left-container {
+      width: 50%;
+    }
+  
+    .right-container {
+      width: 50%;
+    }
+}
+
+@media (max-width: 1400px) {
+
+  .statement-container {
+    flex-direction: column;
+  }
+
+  .left-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .right-container {
+    width: 100%;
+  }
 }

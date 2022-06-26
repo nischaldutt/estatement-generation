@@ -1,5 +1,5 @@
 
-  <h5>Enter details to fetch you account's e-statement</h5>
+  <h4>Enter details to fetch you account's e-statement</h4>
 
   <form class="user-form" [formGroup]="statementForm" (ngSubmit)="onSubmit()" novalidate>
     <div class="radio-btn-group">
@@ -22,7 +22,7 @@
       </div>
     </div>
     <!-- by-month -->
-    <div *ngIf="formType?.value === 'month'" class="row row-cols-sm-auto">
+    <div *ngIf="formType?.value === 'month'" class="row row-cols-sm-auto inputs-class">
       <!-- select year -->
       <div class="col-12">
         <label>Year</label>
@@ -46,9 +46,18 @@
         <div class="input-group">
           <select class="form-select" aria-label=".form-select-lg" name="selectedMonth" (change)="changeMonth($event)"
             formControlName="selectedMonth">
-            <option value="01">Jan</option>
-            <option value="02">Feb</option>
-            <option value="03">Mar</option>
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
           </select>
         </div>
 
@@ -59,7 +68,7 @@
     </div>
 
     <!-- by-year -->
-    <div *ngIf="formType?.value === 'year'" class="row row-cols-sm-auto">
+    <div *ngIf="formType?.value === 'year'" class="row row-cols-sm-auto inputs-class">
       <!-- select year -->
       <div class="col-12">
         <label>Year</label>
@@ -79,7 +88,7 @@
     </div>
 
     <!-- custom -->
-    <div *ngIf="formType?.value === 'custom'" class="row row-cols-sm-auto">
+    <div *ngIf="formType?.value === 'custom'" class="row row-cols-sm-auto inputs-class">
       <!-- from date -->
       <div class="col-12">
         <label>From</label>
@@ -134,7 +143,7 @@
       </div>
     </div>
 
-    <button type="submit" class="form-submit btn btn-primary" 
+    <button type="submit" class="form-submit btn submit-btn" 
       [disabled]="!statementForm.valid">
       Submit
     </button>

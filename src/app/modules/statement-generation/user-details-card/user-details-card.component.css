@@ -28,3 +28,13 @@ td {
   text-align: left;
   padding: 0px 3px;
 }
+
+@media (max-width: 1400px) {
+  .user-card {
+    padding: 20px;
+  }
+
+  .user-image {
+    width: 150px;
+  }
+}

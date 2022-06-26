@@ -10,7 +10,7 @@
 
 }
 
-.center h1 {
+.center h2 {
   text-align: center;
   padding: 20px 0;
   border-bottom: 1px solid silver;
@@ -175,4 +175,41 @@ input[type="submit"]:hover {
 .moto-container {
   margin-top: 10px;
   margin-bottom: 30px;
+}
+
+@media (max-width: 1400px) {
+  #hero {
+    width: 100%;
+  }
+
+  .hero-svg img {
+    width: 400px;
+    height: 300px;
+  }
+
+  .center {
+    width: 40vw
+  }
+}
+
+@media (max-width: 1000px) {
+
+  .hero-svg img {
+   display: none;
+  }
+
+  .moto-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .center {
+    width: 80vw
+  }
 }
