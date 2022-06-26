@@ -1,0 +1,8 @@
+<ngb-carousel *ngIf="banners" [showNavigationArrows]="showNavigationArrows"
+  [showNavigationIndicators]="showNavigationIndicators">
+  <ng-template ngbSlide *ngFor="let image of banners">
+    <div class="picsum-img-wrapper">
+      <img [src]="image.url" [alt]="image.alt">
+    </div>
+  </ng-template>
+</ngb-carousel>

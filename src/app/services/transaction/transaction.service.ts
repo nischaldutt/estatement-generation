@@ -40,19 +40,21 @@ function sort(
       console.log({ a, b });
       const res = compare(a[column], b[column]);
       return direction === 'asc' ? res : -res;
-      return 1;
     });
   }
 }
 
 function matches(transaction: Transaction, term: string, pipe: PipeTransform) {
-  console.log({ transaction });
+  // console.log({ transaction });
+  // console.log({ term });
   return (
     transaction.name.toLowerCase().includes(term.toLowerCase()) ||
-    pipe.transform(transaction.accountNo).includes(term) ||
-    pipe.transform(transaction.name).includes(term) ||
-    pipe.transform(transaction.txnType).includes(term) ||
-    pipe.transform(transaction.refAccount).includes(term)
+    transaction.accountNo.includes(term) ||
+    transaction.refAccount.includes(term)
+    // pipe.transform(transaction.accountNo).includes(term) ||
+    // pipe.transform(transaction.name).includes(term) ||
+    // pipe.transform(transaction.txnType).includes(term) ||
+    // pipe.transform(transaction.refAccount).includes(term)
   );
 }
 
@@ -134,11 +136,14 @@ export class TransactionService {
 
     // 1. sort
     let transactions = sort(TRANSACTIONS, sortColumn, sortDirection);
+    // console.log({ sorted: transactions });
 
     // 2. filter
     transactions = transactions.filter((txn) =>
       matches(txn, searchTerm, this.pipe)
     );
+    // console.log({ filtered: transactions });
+
     const total = transactions.length;
 
     // 3. paginate
@@ -146,6 +151,7 @@ export class TransactionService {
       (page - 1) * pageSize,
       (page - 1) * pageSize + pageSize
     );
+
     return of({ transactions, total });
   }
 }

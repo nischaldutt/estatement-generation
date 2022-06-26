@@ -6,9 +6,8 @@ import { StatementFormComponent } from './statement-form/statement-form.componen
 import { LatestTransactionsComponent } from './latest-transactions/latest-transactions.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FirstErrorKeyPipe } from './first-error-key.pipe';
-import { AppModule } from 'src/app/app.module';
 import { SharedModuleModule } from 'src/app/shared/shared-module/shared-module.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,6 @@ import { SharedModuleModule } from 'src/app/shared/shared-module/shared-module.m
     UserDetailsCardComponent,
     StatementFormComponent,
     LatestTransactionsComponent,
-    FirstErrorKeyPipe,
   ],
   imports: [
     CommonModule,
@@ -24,6 +22,7 @@ import { SharedModuleModule } from 'src/app/shared/shared-module/shared-module.m
     FormsModule,
     ReactiveFormsModule,
     SharedModuleModule,
+    HttpClientModule,
   ],
   exports: [StatementGenerationComponent],
 })

@@ -9,8 +9,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'generate-statement', component: StatementGenerationComponent },
   { path: 'view-statement', component: ViewStatementComponent },
-  { path: '', component: LoginComponent },
-  { path: '**', component: LoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
+  // { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({

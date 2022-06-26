@@ -1,6 +1,6 @@
 .user-card {
-  border: 2px solid black;
   padding: 40px;
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .user-image {
@@ -9,4 +9,32 @@
   border-radius: 50%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.card-content {
+  margin-top: 20px;
+}
+
+table, td, tr {
+  font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.198);
+}
+
+.row-type {
+  font-weight: bolder;
+}
+
+td {
+  text-align: left;
+  padding: 0px 3px;
+}
+
+@media (max-width: 1400px) {
+  .user-card {
+    padding: 20px;
+  }
+
+  .user-image {
+    width: 150px;
+  }
 }
