@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 import { ValidateDate } from '../../../shared/validators/date.validator';
 
@@ -21,7 +22,8 @@ export class StatementFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cdRef: ChangeDetectorRef,
-    private calendar: NgbCalendar
+    private calendar: NgbCalendar,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -128,16 +130,19 @@ export class StatementFormComponent implements OnInit {
         case 'month': {
           const { selectedMonth, selectedYear } = this.statementForm.value;
           console.log({ selectedMonth, selectedYear });
+          this.router.navigateByUrl('/view-statement');
           return;
         }
         case 'year': {
           const { selectedYear } = this.statementForm.value;
           console.log({ selectedYear });
+          this.router.navigateByUrl('/view-statement');
           return;
         }
         case 'custom': {
           const { fromDate, toDate } = this.statementForm.value;
           console.log({ fromDate, toDate });
+          this.router.navigateByUrl('/view-statement');
           return;
         }
         default:
