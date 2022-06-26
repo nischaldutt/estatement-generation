@@ -1,6 +1,6 @@
 .user-card {
-  border: 2px solid black;
   padding: 40px;
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .user-image {

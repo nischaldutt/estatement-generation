@@ -1,5 +1,5 @@
 .user-form {
-  padding: 10px; 
+  border: 1px solid black; 
 }
 
 .form-submit {
@@ -11,4 +11,13 @@
   color: red;
   font-size: 12px;
   font-style: italic;
+}
+
+.radio-btn-group {
+  border: 1px solid black;
+}
+
+.radio-btn-group div {
+  margin-top: 10px;
+  margin-right: 30px;
 }
