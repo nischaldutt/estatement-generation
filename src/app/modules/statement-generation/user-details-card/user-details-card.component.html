@@ -1,7 +1,12 @@
 
 
 <div class="card user-card text-center" style="width: 24rem;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" class="card-img-top user-image" alt="...">
+  <img [src]="fakeUserImageUrl 
+    ? fakeUserImageUrl 
+    : 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'" 
+    class="card-img-top user-image" 
+    alt="user avatar"
+  />
   
   <div class="card-body">
     <h5 class="card-title">Jack Smith</h5>
