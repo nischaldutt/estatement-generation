@@ -15,6 +15,12 @@
   width: 70%;
 }
 
+.carousal-footer {
+  width:70vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (max-width: 1900px) {
   .left-container {
       width: 40%;
