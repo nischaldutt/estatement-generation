@@ -12,7 +12,6 @@ export class AppComponent {
 
   constructor(private router: Router, private location: Location) {
     router.events.subscribe((val) => {
-      console.log('here');
       if (location.path() != '/login') {
         this.btnText = 'Logout';
       } else {

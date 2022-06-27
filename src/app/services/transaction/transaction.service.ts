@@ -4,13 +4,14 @@ import { Injectable, PipeTransform } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 
 import { Transaction } from '../../shared/interfaces/Transaction';
-import { TRANSACTIONS } from 'src/app/shared/interfaces/Transactions';
+// import { TRANSACTIONS } from 'src/app/shared/interfaces/Transactions';
 import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import {
   SortColumn,
   SortDirection,
 } from '../../shared/directives/sortable.directive';
+import { StatementService } from '../statement/statement.service';
 
 interface SearchResult {
   transactions: Transaction[];
@@ -25,7 +26,7 @@ interface State {
   sortDirection: SortDirection;
 }
 
-const compare = (v1: string | number | Date, v2: string | number | Date) =>
+const compare = (v1: string | number, v2: string | number) =>
   v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 function sort(
@@ -60,6 +61,8 @@ function matches(transaction: Transaction, term: string, pipe: PipeTransform) {
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
+  TRANSACTIONS!: Transaction[];
+
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _transactions$ = new BehaviorSubject<Transaction[]>([]);
@@ -73,7 +76,11 @@ export class TransactionService {
     sortDirection: '',
   };
 
-  constructor(private pipe: DecimalPipe) {
+  constructor(
+    private pipe: DecimalPipe,
+    private statementService: StatementService
+  ) {
+    console.log('2');
     this._search$
       .pipe(
         tap(() => this._loading$.next(true)),
@@ -83,9 +90,15 @@ export class TransactionService {
         tap(() => this._loading$.next(false))
       )
       .subscribe((result) => {
+        console.log({ result });
         this._transactions$.next(result.transactions);
         this._total$.next(result.total);
       });
+
+    this.statementService.fetchTransactions().subscribe({
+      next: (data) => (this.TRANSACTIONS = data),
+      error: (error) => console.log({ error }),
+    });
 
     this._search$.next();
   }
@@ -131,11 +144,12 @@ export class TransactionService {
   }
 
   private _search(): Observable<SearchResult> {
+    console.log('3');
     const { sortColumn, sortDirection, pageSize, page, searchTerm } =
       this._state;
 
     // 1. sort
-    let transactions = sort(TRANSACTIONS, sortColumn, sortDirection);
+    let transactions = sort(this.TRANSACTIONS, sortColumn, sortDirection);
     // console.log({ sorted: transactions });
 
     // 2. filter
