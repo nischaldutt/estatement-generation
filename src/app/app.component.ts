@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { PlatformLocation } from '@angular/common';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,8 +8,19 @@ import { PlatformLocation } from '@angular/common';
 })
 export class AppComponent {
   title = 'estatement-generation';
+  btnText = 'Sign Up';
 
-  constructor(private router: Router, private _location: PlatformLocation) {}
+  constructor(private router: Router, private location: Location) {
+    router.events.subscribe((val) => {
+      console.log('here');
+      if (location.path() != '/login') {
+        this.btnText = 'Logout';
+      } else {
+        this.btnText = 'Sign Up';
+      }
+    });
+  }
+
   @HostListener('window:popstate', ['$event'])
   onPopState(event: Event) {
     // event.stopPropagation();

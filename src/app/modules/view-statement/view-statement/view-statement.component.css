@@ -5,13 +5,21 @@
 }
 
 .action-container {
-
-}
-
-.action-container {
-  
+  display: flex;
+  justify-content: space-between;
 }
 
 .container h3 {
   margin: 10px 0;
+}
+
+.download-btn {
+  background-color: #3498DB;
+  color: white;
+}
+
+.mail-btn {
+  margin-left: 20px;
+  background-color: rgb(202, 72, 72);
+  color: white;
 }
