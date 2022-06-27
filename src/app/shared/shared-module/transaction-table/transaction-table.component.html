@@ -37,10 +37,11 @@
           <ngb-highlight [result]="txn.name" [term]="service.searchTerm"></ngb-highlight>
         </td>
         <td>
-          <ngb-highlight [result]="txn.time.toISOString().split('T')[0]"></ngb-highlight>
+          <ngb-highlight [result]="txn.time"></ngb-highlight>
         </td>
         <td scope="row">{{ txn.txnType === "C" ? "Credit": "Debit" }}</td>
         <!-- <td>
+          txn.time.toISOString().split('T')[0]
           <ngb-highlight [result]="txn.txnType"></ngb-highlight>
         </td> -->
         <td>

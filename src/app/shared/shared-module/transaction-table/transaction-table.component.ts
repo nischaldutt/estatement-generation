@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChildren, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Transaction } from '../../interfaces/Transaction';
@@ -19,9 +19,12 @@ export class TransactionTableComponent {
   transactions$: Observable<Transaction[]>;
   total$: Observable<number>;
 
+  @Input() txns!: Transaction[];
+
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
 
   constructor(public service: TransactionService) {
+    console.log('1');
     this.transactions$ = service.transactions$;
     this.total$ = service.total$;
   }

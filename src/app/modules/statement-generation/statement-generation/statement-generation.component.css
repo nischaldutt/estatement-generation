@@ -16,9 +16,11 @@
 }
 
 .carousal-footer {
-  width:70vw;
+  width: 55vw;
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 1900px) {
