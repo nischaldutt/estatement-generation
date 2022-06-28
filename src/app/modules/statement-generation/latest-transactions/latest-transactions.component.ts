@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { StatementService } from 'src/app/services/statement/statement.service';
 import { Transaction } from 'src/app/shared/interfaces/Transaction';
 
@@ -9,10 +10,13 @@ import { Transaction } from 'src/app/shared/interfaces/Transaction';
 })
 export class LatestTransactionsComponent implements OnInit {
   myTxns!: Transaction[];
+  rowCount!: number;
 
   constructor(private statementService: StatementService) {}
 
   ngOnInit(): void {
+    this.rowCount = 10;
+    console.log('here');
     this.statementService.fetchTransactions().subscribe({
       next: (data) => (this.myTxns = data),
       error: (error) => console.log({ error }),

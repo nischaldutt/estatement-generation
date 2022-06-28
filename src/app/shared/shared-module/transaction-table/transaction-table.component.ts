@@ -19,6 +19,7 @@ export class TransactionTableComponent {
   transactions$: Observable<Transaction[]>;
   total$: Observable<number>;
 
+  @Input() rowCount!: number;
   @Input() txns!: Transaction[];
 
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;

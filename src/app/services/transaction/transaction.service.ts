@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
-import { Injectable, PipeTransform } from '@angular/core';
-
+import { Injectable, Input, PipeTransform } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-
 import { Transaction } from '../../shared/interfaces/Transaction';
-// import { TRANSACTIONS } from 'src/app/shared/interfaces/Transactions';
 import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import {
@@ -62,6 +59,7 @@ function matches(transaction: Transaction, term: string, pipe: PipeTransform) {
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
   TRANSACTIONS!: Transaction[];
+  @Input() txns!: Transaction[];
 
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
@@ -70,7 +68,7 @@ export class TransactionService {
 
   private _state: State = {
     page: 1,
-    pageSize: 4,
+    pageSize: 5,
     searchTerm: '',
     sortColumn: '',
     sortDirection: '',
@@ -80,12 +78,15 @@ export class TransactionService {
     private pipe: DecimalPipe,
     private statementService: StatementService
   ) {
-    console.log('2');
+    // console.log('2');
     this._search$
       .pipe(
         tap(() => this._loading$.next(true)),
         debounceTime(200),
-        switchMap(() => this._search()),
+        switchMap(() => {
+          console.log('inside switch map');
+          return this._search();
+        }),
         delay(200),
         tap(() => this._loading$.next(false))
       )
@@ -144,7 +145,7 @@ export class TransactionService {
   }
 
   private _search(): Observable<SearchResult> {
-    console.log('3');
+    // console.log('3');
     const { sortColumn, sortDirection, pageSize, page, searchTerm } =
       this._state;
 
@@ -153,15 +154,15 @@ export class TransactionService {
     // console.log({ sorted: transactions });
 
     // 2. filter
-    transactions = transactions.filter((txn) =>
+    transactions = transactions?.filter((txn) =>
       matches(txn, searchTerm, this.pipe)
     );
     // console.log({ filtered: transactions });
 
-    const total = transactions.length;
+    const total = transactions?.length;
 
     // 3. paginate
-    transactions = transactions.slice(
+    transactions = transactions?.slice(
       (page - 1) * pageSize,
       (page - 1) * pageSize + pageSize
     );
