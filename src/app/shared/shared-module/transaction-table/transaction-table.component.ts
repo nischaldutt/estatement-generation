@@ -42,8 +42,8 @@ export class TransactionTableComponent {
   }
 
   ngOnChanges(changes: any) {
-    console.log({ changes });
-    this.transactions$ = this.txns;
+    // console.log({ changes });
+    this.transactions$ = changes.txns;
     this.txns.subscribe({
       next: (data) => (this.total$ = of(data.length)),
     });

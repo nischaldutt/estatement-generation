@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,11 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -37,6 +42,11 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       console.log({ test: this.loginForm.value });
     }
+
+    this.loginService.login().subscribe({
+      next: (data) => console.log({ data }),
+      error: (error) => console.log({ error }),
+    });
     this.router.navigateByUrl('/generate-statement');
   }
 }

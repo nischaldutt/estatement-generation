@@ -78,10 +78,7 @@ export class TransactionService {
       .pipe(
         tap(() => this._loading$.next(true)),
         debounceTime(200),
-        switchMap(() => {
-          console.log('inside switch map');
-          return this._search();
-        }),
+        switchMap(() => this._search()),
         delay(200),
         tap(() => this._loading$.next(false))
       )
@@ -136,6 +133,8 @@ export class TransactionService {
 
   private _search(): Observable<SearchResult> {
     // console.log('3');
+
+    console.log({ tessss: this.TRANSACTIONS });
     const { sortColumn, sortDirection, pageSize, page, searchTerm } =
       this._state;
 
