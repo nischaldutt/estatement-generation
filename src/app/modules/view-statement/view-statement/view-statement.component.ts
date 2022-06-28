@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { StatementService } from 'src/app/services/statement/statement.service';
+import { Transaction } from 'src/app/shared/interfaces/Transaction';
 
 @Component({
   selector: 'app-view-statement',
@@ -6,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-statement.component.css'],
 })
 export class ViewStatementComponent implements OnInit {
-  constructor() {}
+  fetchedTxns!: Observable<Transaction[]>;
 
-  ngOnInit(): void {}
+  constructor(private service: StatementService) {}
+
+  ngOnInit(): void {
+    this.fetchedTxns = this.service.fetchTransactions();
+  }
 }

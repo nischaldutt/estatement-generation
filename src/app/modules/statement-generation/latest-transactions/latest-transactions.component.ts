@@ -9,17 +9,17 @@ import { Transaction } from 'src/app/shared/interfaces/Transaction';
   styleUrls: ['./latest-transactions.component.css'],
 })
 export class LatestTransactionsComponent implements OnInit {
-  myTxns!: Transaction[];
-  rowCount!: number;
+  myTxns!: Observable<Transaction[]>;
 
   constructor(private statementService: StatementService) {}
 
   ngOnInit(): void {
-    this.rowCount = 10;
-    console.log('here');
-    this.statementService.fetchTransactions().subscribe({
-      next: (data) => (this.myTxns = data),
-      error: (error) => console.log({ error }),
-    });
+    // console.log('here');
+    this.myTxns = this.statementService.fetchTransactions();
+
+    // .subscribe({
+    //   next: (data) => (this.myTxns = data),
+    //   error: (error) => console.log({ error }),
+    // });
   }
 }

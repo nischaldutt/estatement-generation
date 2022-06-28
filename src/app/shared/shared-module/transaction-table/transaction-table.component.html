@@ -17,8 +17,6 @@
   <table class="table table-striped">
     <thead>
       <tr class="table-primary">
-        <th scope="accountNo">Account No.</th>
-        <th scope="col" sortable="name" (sort)="onSort($event)">Account Holder Name</th>
         <th scope="col" sortable="time" (sort)="onSort($event)">Time</th>
         <th scope="col">Transaction Type</th>
         <th scope="col">Reference Account No.</th>
@@ -27,19 +25,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let txn of transactions$ | async">
+      <tr *ngFor="let txn of txns | async">
         <!-- <td scope="row">{{ txn.accountNo }}</td> -->
-        <td>
-          <ngb-highlight [result]="txn.accountNo" [term]="service.searchTerm"></ngb-highlight>
+        <!-- <td>
+          <ngb-highlight result="txn.accountNo" [term]="service.searchTerm"></ngb-highlight>
         </td>
         <td>
-          <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + txn.flag" class="me-2" style="width: 20px"> -->
-          <ngb-highlight [result]="txn.name" [term]="service.searchTerm"></ngb-highlight>
-        </td>
+          <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + txn.flag" class="me-2" style="width: 20px">
+          <ngb-highlight result="txn.name" [term]="service.searchTerm"></ngb-highlight>
+        </td> -->
         <td>
-          <ngb-highlight [result]="txn.time"></ngb-highlight>
+          <ngb-highlight [result]="txn.transTime"></ngb-highlight>
         </td>
-        <td scope="row">{{ txn.txnType === "C" ? "Credit": "Debit" }}</td>
+        <td scope="row">{{ txn.transType === "C" ? "Credit": "Debit" }}</td>
         <!-- <td>
           txn.time.toISOString().split('T')[0]
           <ngb-highlight [result]="txn.txnType"></ngb-highlight>
@@ -47,11 +45,11 @@
         <td>
           <ngb-highlight [result]="txn.refAccount" [term]="service.searchTerm"></ngb-highlight>
         </td>
-        <td scope="row">{{ txn.txnAmount.toString() }}</td>
+        <td scope="row">{{ txn.transAmount.toString() }}</td>
         <!-- <td>
           <ngb-highlight [result]="txn.txnAmount.toString()">{{ txn.txnAmount }}</ngb-highlight>
         </td> -->
-        <td scope="row">{{ txn.accountBalance.toString() }}</td>
+        <td scope="row">{{ txn.remainingBalance.toString() }}</td>
         <!-- <td>
           <ngb-highlight [result]="txn.accountBalance.toString()"></ngb-highlight>
         </td> -->

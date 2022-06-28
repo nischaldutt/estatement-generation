@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class StatementService {
-  baseURL = 'http://localhost:3000/transactions';
+  baseURL =
+    'http://192.168.0.108:8080/fetch/custom/vijay84@gmail.com/2020-01-01/2021-12-31';
 
   constructor(private http: HttpClient) {}
 

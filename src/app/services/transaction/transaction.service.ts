@@ -46,8 +46,7 @@ function matches(transaction: Transaction, term: string, pipe: PipeTransform) {
   // console.log({ transaction });
   // console.log({ term });
   return (
-    transaction.name.toLowerCase().includes(term.toLowerCase()) ||
-    transaction.accountNo.includes(term) ||
+    // transaction.name.toLowerCase().includes(term.toLowerCase()) ||
     transaction.refAccount.includes(term)
     // pipe.transform(transaction.accountNo).includes(term) ||
     // pipe.transform(transaction.name).includes(term) ||
@@ -59,7 +58,6 @@ function matches(transaction: Transaction, term: string, pipe: PipeTransform) {
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
   TRANSACTIONS!: Transaction[];
-  @Input() txns!: Transaction[];
 
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
@@ -74,10 +72,7 @@ export class TransactionService {
     sortDirection: '',
   };
 
-  constructor(
-    private pipe: DecimalPipe,
-    private statementService: StatementService
-  ) {
+  constructor(private pipe: DecimalPipe) {
     // console.log('2');
     this._search$
       .pipe(
@@ -95,11 +90,6 @@ export class TransactionService {
         this._transactions$.next(result.transactions);
         this._total$.next(result.total);
       });
-
-    this.statementService.fetchTransactions().subscribe({
-      next: (data) => (this.TRANSACTIONS = data),
-      error: (error) => console.log({ error }),
-    });
 
     this._search$.next();
   }
