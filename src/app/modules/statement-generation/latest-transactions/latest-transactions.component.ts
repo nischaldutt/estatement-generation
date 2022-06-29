@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { StatementService } from 'src/app/services/statement/statement.service';
+import { TransferService } from 'src/app/services/transfer/transfer.service';
 import { Transaction } from 'src/app/shared/interfaces/Transaction';
 
 @Component({
@@ -11,15 +12,10 @@ import { Transaction } from 'src/app/shared/interfaces/Transaction';
 export class LatestTransactionsComponent implements OnInit {
   myTxns!: Observable<Transaction[]>;
 
-  constructor(private statementService: StatementService) {}
+  constructor(private transferService: TransferService) {}
 
   ngOnInit(): void {
-    // console.log('here');
-    this.myTxns = this.statementService.fetchTransactions();
-
-    // .subscribe({
-    //   next: (data) => (this.myTxns = data),
-    //   error: (error) => console.log({ error }),
-    // });
+    const { trans } = this.transferService.getData();
+    this.myTxns = of(trans);
   }
 }

@@ -16,4 +16,23 @@ export class ViewStatementComponent implements OnInit {
   ngOnInit(): void {
     this.fetchedTxns = this.service.fetchTransactions();
   }
+
+  downloadPdf() {
+    console.log('here');
+    this.service.downloadPdfDocument().subscribe({
+      next: (data: Blob) => {
+        var file = new Blob([data], { type: 'application/pdf' });
+        var fileURL = URL.createObjectURL(file);
+
+        window.open(fileURL);
+        var a = document.createElement('a');
+        a.href = fileURL;
+        a.target = '_blank';
+        a.download = 'Account-Statement.pdf';
+        document.body.appendChild(a);
+        a.click();
+      },
+      error: (error) => console.log({ error }),
+    });
+  }
 }

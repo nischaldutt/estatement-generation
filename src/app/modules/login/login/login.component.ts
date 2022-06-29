@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login/login.service';
+import { TransferService } from 'src/app/services/transfer/transfer.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private transferService: TransferService
   ) {}
 
   ngOnInit() {
@@ -38,15 +40,17 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin() {
-    console.log({ form: this.loginForm });
     if (this.loginForm.valid) {
-      console.log({ test: this.loginForm.value });
-    }
+      const { email, password } = this.loginForm.value;
 
-    this.loginService.login().subscribe({
-      next: (data) => console.log({ data }),
-      error: (error) => console.log({ error }),
-    });
-    this.router.navigateByUrl('/generate-statement');
+      this.loginService.login(email, password).subscribe({
+        next: (data) => {
+          // console.log({ data });
+          this.transferService.setData(data);
+          this.router.navigateByUrl('/generate-statement');
+        },
+        error: (error) => console.log({ error }),
+      });
+    }
   }
 }
