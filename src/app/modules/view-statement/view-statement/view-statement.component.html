@@ -6,13 +6,11 @@
     </div>
     <div>
       <button class="btn download-btn" (click)="downloadPdf()">Download PDF</button>
-      <button class="btn mail-btn">Mail</button>
+      <button class="btn mail-btn" (click)="sendMail()">Mail</button>
     </div>
   </div>
 
   <div class="table-container">
     <app-transaction-table [txns]="fetchedTxns"></app-transaction-table>
   </div>
-
-  
 </div>

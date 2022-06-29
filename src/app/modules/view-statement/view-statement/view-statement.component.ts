@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { MailServiceService } from 'src/app/services/mail-service/mail-service.service';
 import { StatementService } from 'src/app/services/statement/statement.service';
 import { TransferService } from 'src/app/services/transfer/transfer.service';
 import { Transaction } from 'src/app/shared/interfaces/Transaction';
@@ -18,17 +19,12 @@ export class ViewStatementComponent implements OnInit {
 
   constructor(
     private service: StatementService,
-    private transferService: TransferService
+    private transferService: TransferService,
+    private mailService: MailServiceService
   ) {}
 
   ngOnInit(): void {
     this.email = this.transferService.getData().email;
-
-    // this.fetchedTxns = this.service.fetchTransactions(
-    //   this.email,
-    //   this.fromDate,
-    //   this.toDate
-    // );
 
     const response = this.transferService.getFetchedTxns();
     this.fetchedTxns = of(response);
@@ -36,11 +32,12 @@ export class ViewStatementComponent implements OnInit {
 
   downloadPdf() {
     // console.log('here');
-    console.log({
-      email: this.transferService.getData().email,
-      from: this.transferService.getFromDate(),
-      to: this.transferService.getToDate(),
-    });
+    // console.log({
+    //   email: this.transferService.getData().email,
+    //   from: this.transferService.getFromDate(),
+    //   to: this.transferService.getToDate(),
+    // });
+
     this.service
       .downloadPdfDocument(
         this.transferService.getData().email,
@@ -62,5 +59,24 @@ export class ViewStatementComponent implements OnInit {
         },
         error: (error) => console.log({ error }),
       });
+  }
+
+  sendMail() {
+    this.mailService
+      .sendMail(
+        this.transferService.getData().email,
+        this.transferService.getFromDate(),
+        this.transferService.getToDate()
+      )
+      .subscribe({
+        next: (data) => {
+          console.log({ data });
+          alert('Mail sent!');
+        },
+        error: (error) => {
+          console.log({ error });
+        },
+      });
+    alert('Mail Sent!');
   }
 }

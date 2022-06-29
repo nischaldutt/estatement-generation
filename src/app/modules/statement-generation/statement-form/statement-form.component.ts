@@ -172,19 +172,18 @@ export class StatementFormComponent implements OnInit {
         }
         case 'custom': {
           const { fromDate, toDate } = this.statementForm.value;
-          // console.log({ fromDate, toDate });
-          const day1 = fromDate.day1 < 10 ? `0${fromDate.day1}` : fromDate.day1;
+          console.log({ fromDate, toDate });
+          const day1 = fromDate.day < 10 ? `0${fromDate.day}` : fromDate.day;
           const month1 =
-            fromDate.month1 < 10 ? `0${fromDate.month1}` : fromDate.month1;
+            fromDate.month < 10 ? `0${fromDate.month}` : fromDate.month;
 
-          const day2 = fromDate.day2 < 10 ? `0${fromDate.day2}` : fromDate.day2;
-          const month2 =
-            fromDate.month2 < 10 ? `0${fromDate.month2}` : fromDate.month2;
+          const day2 = toDate.day < 10 ? `0${toDate.day}` : toDate.day;
+          const month2 = toDate.month < 10 ? `0${toDate.month}` : toDate.month;
 
-          const { year1 } = fromDate;
-          const { year2 } = toDate;
-          this.transferService.setFromDate(`${day1}-${month1}, ${year1}`);
-          this.transferService.setToDate(`${day2}-${month2}, ${year2}`);
+          this.transferService.setFromDate(
+            `${fromDate.year}-${month1}-${day1}`
+          );
+          this.transferService.setToDate(`${toDate.year}-${month2}-${day2}`);
           break;
         }
         default:

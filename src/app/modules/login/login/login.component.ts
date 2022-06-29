@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/generate-statement');
         },
         error: (error) => {
+          console.log({ error });
           alert('Authentication failed.');
         },
       });
