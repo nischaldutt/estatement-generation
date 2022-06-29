@@ -11,8 +11,8 @@ export class LoginService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any[]> {
-    email = 'vijay84@gmail.com';
-    password = 'Password';
+    // email = 'vijay84@gmail.com';
+    // password = 'Password';
 
     return this.http.post<any[]>(this.baseURL, {
       email,

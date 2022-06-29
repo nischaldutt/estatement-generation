@@ -49,7 +49,9 @@ export class LoginComponent implements OnInit {
           this.transferService.setData(data);
           this.router.navigateByUrl('/generate-statement');
         },
-        error: (error) => console.log({ error }),
+        error: (error) => {
+          alert('Authentication failed.');
+        },
       });
     }
   }

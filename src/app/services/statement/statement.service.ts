@@ -8,15 +8,21 @@ import { Observable } from 'rxjs';
 export class StatementService {
   constructor(private http: HttpClient) {}
 
-  fetchTransactions(): Observable<any[]> {
-    const baseURL =
-      'http://192.168.0.108:8080/fetch/custom/vijay84@gmail.com/2020-01-01/2021-12-31';
+  fetchTransactions(
+    email: string,
+    fromDate: string,
+    toDate: string
+  ): Observable<any[]> {
+    const baseURL = `http://192.168.0.108:8080/fetch/custom/${email}/${fromDate}/${toDate}`;
     return this.http.get<any[]>(baseURL);
   }
 
-  downloadPdfDocument(): Observable<Blob> {
-    const baseURL =
-      'http://192.168.0.108:8080/pdfreport/vijay84@gmail.com/2020-01-01/2021-12-31';
+  downloadPdfDocument(
+    email: string,
+    fromDate: string,
+    toDate: string
+  ): Observable<Blob> {
+    const baseURL = `http://192.168.0.108:8080/pdfreport/${email}/${fromDate}/${toDate}`;
     return this.http.get<Blob>(baseURL, {
       headers: {
         'Content-Type': 'application/pdf',
