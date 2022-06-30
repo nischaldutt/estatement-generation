@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { StatementService } from 'src/app/services/statement/statement.service';
+import { TransferService } from 'src/app/services/transfer/transfer.service';
 import { Transaction } from 'src/app/shared/interfaces/Transaction';
 
 @Component({
@@ -8,14 +10,12 @@ import { Transaction } from 'src/app/shared/interfaces/Transaction';
   styleUrls: ['./latest-transactions.component.css'],
 })
 export class LatestTransactionsComponent implements OnInit {
-  myTxns!: Transaction[];
+  myTxns!: Observable<Transaction[]>;
 
-  constructor(private statementService: StatementService) {}
+  constructor(private transferService: TransferService) {}
 
   ngOnInit(): void {
-    this.statementService.fetchTransactions().subscribe({
-      next: (data) => (this.myTxns = data),
-      error: (error) => console.log({ error }),
-    });
+    const { trans } = this.transferService.getData();
+    this.myTxns = of(trans);
   }
 }

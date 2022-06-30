@@ -6,6 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login/login.service';
+import { TransferService } from 'src/app/services/transfer/transfer.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,12 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private loginService: LoginService,
+    private transferService: TransferService
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -33,10 +40,20 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin() {
-    console.log({ form: this.loginForm });
     if (this.loginForm.valid) {
-      console.log({ test: this.loginForm.value });
+      const { email, password } = this.loginForm.value;
+
+      this.loginService.login(email, password).subscribe({
+        next: (data) => {
+          // console.log({ data });
+          this.transferService.setData(data);
+          this.router.navigateByUrl('/generate-statement');
+        },
+        error: (error) => {
+          console.log({ error });
+          alert('Authentication failed.');
+        },
+      });
     }
-    this.router.navigateByUrl('/generate-statement');
   }
 }

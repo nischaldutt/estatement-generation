@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
-import { Injectable, PipeTransform } from '@angular/core';
-
+import { Injectable, Input, PipeTransform } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-
 import { Transaction } from '../../shared/interfaces/Transaction';
-// import { TRANSACTIONS } from 'src/app/shared/interfaces/Transactions';
 import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import {
@@ -49,8 +46,7 @@ function matches(transaction: Transaction, term: string, pipe: PipeTransform) {
   // console.log({ transaction });
   // console.log({ term });
   return (
-    transaction.name.toLowerCase().includes(term.toLowerCase()) ||
-    transaction.accountNo.includes(term) ||
+    // transaction.name.toLowerCase().includes(term.toLowerCase()) ||
     transaction.refAccount.includes(term)
     // pipe.transform(transaction.accountNo).includes(term) ||
     // pipe.transform(transaction.name).includes(term) ||
@@ -70,17 +66,14 @@ export class TransactionService {
 
   private _state: State = {
     page: 1,
-    pageSize: 4,
+    pageSize: 5,
     searchTerm: '',
     sortColumn: '',
     sortDirection: '',
   };
 
-  constructor(
-    private pipe: DecimalPipe,
-    private statementService: StatementService
-  ) {
-    console.log('2');
+  constructor(private pipe: DecimalPipe) {
+    // console.log('2');
     this._search$
       .pipe(
         tap(() => this._loading$.next(true)),
@@ -94,11 +87,6 @@ export class TransactionService {
         this._transactions$.next(result.transactions);
         this._total$.next(result.total);
       });
-
-    this.statementService.fetchTransactions().subscribe({
-      next: (data) => (this.TRANSACTIONS = data),
-      error: (error) => console.log({ error }),
-    });
 
     this._search$.next();
   }
@@ -144,7 +132,9 @@ export class TransactionService {
   }
 
   private _search(): Observable<SearchResult> {
-    console.log('3');
+    // console.log('3');
+
+    console.log({ tessss: this.TRANSACTIONS });
     const { sortColumn, sortDirection, pageSize, page, searchTerm } =
       this._state;
 
@@ -153,15 +143,15 @@ export class TransactionService {
     // console.log({ sorted: transactions });
 
     // 2. filter
-    transactions = transactions.filter((txn) =>
+    transactions = transactions?.filter((txn) =>
       matches(txn, searchTerm, this.pipe)
     );
     // console.log({ filtered: transactions });
 
-    const total = transactions.length;
+    const total = transactions?.length;
 
     // 3. paginate
-    transactions = transactions.slice(
+    transactions = transactions?.slice(
       (page - 1) * pageSize,
       (page - 1) * pageSize + pageSize
     );
