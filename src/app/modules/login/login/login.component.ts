@@ -40,20 +40,22 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin() {
+    this.router.navigateByUrl('/generate-statement');
+
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
-      this.loginService.login(email, password).subscribe({
-        next: (data) => {
-          // console.log({ data });
-          this.transferService.setData(data);
-          this.router.navigateByUrl('/generate-statement');
-        },
-        error: (error) => {
-          console.log({ error });
-          alert('Authentication failed.');
-        },
-      });
+      // this.loginService.login(email, password).subscribe({
+      //   next: (data) => {
+      //     // console.log({ data });
+      //     this.transferService.setData(data);
+      //     this.router.navigateByUrl('/generate-statement');
+      //   },
+      //   error: (error) => {
+      //     console.log({ error });
+      //     alert('Authentication failed.');
+      //   },
+      // });
     }
   }
 }

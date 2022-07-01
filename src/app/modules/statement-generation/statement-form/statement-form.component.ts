@@ -144,6 +144,8 @@ export class StatementFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.router.navigateByUrl('/view-statement');
+
     if (this.statementForm.valid) {
       let fromDate = '';
       let toDate = '';
@@ -190,23 +192,23 @@ export class StatementFormComponent implements OnInit {
           return;
       }
 
-      this.statementService
-        .fetchTransactions(
-          email,
-          this.transferService.getFromDate(),
-          this.transferService.getToDate()
-        )
-        .subscribe({
-          next: (data) => {
-            // console.log({ fetchTransactions: data });
-            this.transferService.setFetchedTxns(data);
-            this.router.navigateByUrl('/view-statement');
-          },
-          error: (error) => {
-            console.log({ error });
-            alert('Something went wrong!');
-          },
-        });
+      // this.statementService
+      //   .fetchTransactions(
+      //     email,
+      //     this.transferService.getFromDate(),
+      //     this.transferService.getToDate()
+      //   )
+      //   .subscribe({
+      //     next: (data) => {
+      //       // console.log({ fetchTransactions: data });
+      //       this.transferService.setFetchedTxns(data);
+      //       this.router.navigateByUrl('/view-statement');
+      //     },
+      //     error: (error) => {
+      //       console.log({ error });
+      //       alert('Something went wrong!');
+      //     },
+      //   });
     }
   }
 }
