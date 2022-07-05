@@ -13,19 +13,19 @@
     <table class="card-content">
       <tr>
         <td class="row-type">Account No: </td>
-        <td>{{ accountNo }}</td>
+        <td>{{ accountNo || 'XXXXXXXX12345' }}</td>
       </tr>
       <tr>
         <td class="row-type">Email: </td>
-        <td>{{ email }}</td>
+        <td>{{ email || 'user@email.com' }}</td>
       </tr>
       <tr>
         <td class="row-type">Address: </td>
-        <td>{{ address }}</td>
+        <td>{{ address || "169 New York St." }}</td>
       </tr>
       <tr>
         <td class="row-type">Account Balance: </td>
-        <td>{{ accountBalance }}</td>
+        <td>{{ accountBalance || 100000000 }}</td>
       </tr>
     </table>
   </div>
